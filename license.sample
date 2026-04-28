@@ -1,0 +1,22 @@
+# 婢滆姱鎱ф櫤 License 鏂囦欢
+# 璇峰嬁淇敼鏈枃浠跺唴瀹?
+# === 瀹㈡埛淇℃伅 ===
+[Customer]
+Name = 銆愬鎴峰悕绉般€?Email = 銆愬鎴烽偖绠便€?
+# === 鏈哄櫒鐮佺粦瀹?===
+[MachineCode]
+Code = 銆愬鎴锋満鍣ㄧ爜銆?
+# === 鏈夋晥鏈?===
+[Expires]
+StartDate = 
+EndDate = 
+
+# === 鎺堟潈鍔熻兘 ===
+[Features]
+BasicTalentSourcing = true
+InterviewOutlines = true
+InterviewAssessment = true
+TalentAssessment = false    # 鍗囩骇鐗堝姛鑳?PositionProfile = false     # 鍗囩骇鐗堝姛鑳?
+# === 绛惧悕锛堢敱绠＄悊鍛樼敓鎴愶級===
+[Signature]
+Value = 
