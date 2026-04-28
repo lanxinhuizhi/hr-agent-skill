@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>婢滆姱鎱ф櫤 路 鏅鸿兘鎷涜仒鏅鸿兘浣?/title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #818CF8;
+            --primary-dark: #3730A3;
+            --bg: #F8FAFC;
+            --card: #FFFFFF;
+            --text: #1E293B;
+            --text-light: #64748B;
+            --border: #E2E8F0;
+            --success: #10B981;
+            --gold: #F59E0B;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #EEF2FF 0%, #F8FAFC 100%);
+            min-height: 100vh;
+            color: var(--text);
+        }
+
+        /* ===== Hero Section ===== */
+        .hero {
+            text-align: center;
+            padding: 48px 20px 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(79,70,229,0.06) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1.3;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: var(--text-light);
+            max-width: 500px;
+            margin: 0 auto 16px;
+            line-height: 1.6;
+        }
+
+        /* ===== Feature Badges ===== */
+        .feature-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin: 16px 0 32px;
+            padding: 0 20px;
+        }
+
+        .feature-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: white;
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            color: var(--text);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+        }
+
+        .feature-badge.pro {
+            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+            border-color: #FCD34D;
+        }
+
+        .feature-badge .pro-tag {
+            background: var(--gold);
+            color: white;
+            font-size: 10px;
+            padding: 1px 6px;
+            border-radius: 100px;
+            font-weight: 700;
+        }
+
+        /* ===== Chat Container ===== */
+        .chat-wrapper {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 16px 80px;
+        }
+
+        .chat-container {
+            background: var(--card);
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        /* ===== Pricing Banner ===== */
+        .pricing-banner {
+            display: none;
+            background: linear-gradient(135deg, #EEF2FF, #E0E7FF);
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .pricing-banner.visible {
+            display: block;
+        }
+
+        .pricing-banner strong {
+            color: var(--primary);
+        }
+
+        .pricing-info-title {
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .pricing-tier {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: white;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 13px;
+            border: 1px solid var(--border);
+            margin: 4px 4px 0 0;
+        }
+
+        .pricing-tier .tag-free { color: var(--success); font-weight: 700; }
+        .pricing-tier .tag-pro { color: var(--gold); font-weight: 700; }
+
+        /* ===== Messages ===== */
+        .messages {
+            padding: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .messages::-webkit-scrollbar {
+            width: 4px;
+        }
+        .messages::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        .message {
+            display: flex;
+            gap: 10px;
+            max-width: 85%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.bot {
+            align-self: flex-start;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .message.bot .message-avatar {
+            background: var(--primary);
+            color: white;
+        }
+
+        .message.user .message-avatar {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .message-bubble {
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .message.bot .message-bubble {
+            background: #F1F5F9;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.user .message-bubble {
+            background: var(--primary);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-bubble .highlight-text {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .message-bubble .pro-highlight {
+            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+            padding: 1px 6px;
+            border-radius: 4px;
+            color: #92400E;
+            font-weight: 600;
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 0;
+        }
+
+        .typing-indicator span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text-light);
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { opacity: 0.3; transform: scale(1); }
+            30% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* ===== Quick Actions ===== */
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 4px 20px 16px;
+        }
+
+        .quick-btn {
+            background: #F8FAFC;
+            border: 1px solid var(--border);
+            padding: 8px 14px;
+            border-radius: 100px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .quick-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* ===== Input ===== */
+        .input-area {
+            display: flex;
+            gap: 8px;
+            padding: 12px 16px;
+            border-top: 1px solid var(--border);
+            background: #FAFBFC;
+        }
+
+        .input-area input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+            background: white;
+        }
+
+        .input-area input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+        }
+
+        .input-area input::placeholder {
+            color: #94A3B8;
+        }
+
+        .input-area button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: var(--primary);
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .input-area button:hover {
+            background: var(--primary-dark);
+            transform: scale(1.04);
+        }
+
+        .input-area button:disabled {
+            background: var(--border);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            text-align: center;
+            padding: 24px 20px 32px;
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 24px; }
+            .messages { max-height: 400px; padding: 16px; }
+            .message { max-width: 90%; }
+        }
+
+        /* ===== Referral Card ===== */
+        .referral-card {
+            display: none;
+            background: white;
+            border: 2px dashed var(--primary-light);
+            border-radius: 16px;
+            padding: 16px;
+            margin: 12px 0;
+        }
+
+        .referral-card.visible {
+            display: block;
+        }
+
+        .referral-card h4 {
+            font-size: 15px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .referral-card p {
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+
+        .referral-card .tier-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .referral-card .tier-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            padding: 6px 10px;
+            background: #F8FAFC;
+            border-radius: 8px;
+        }
+
+        .referral-card .tier-item .icon {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-logo">馃 婢滆姱鎱ф櫤</div>
+        <h1>璁╀綘鐨勬嫑鑱?br>鏁堢巼鎻愬崌 <span class="highlight">10 鍊?/span></h1>
+        <p>浜烘墠瀵绘簮 路 闈㈣瘯棰樼翰 路 闈㈣瘯璇勪及 路 浜烘墠娴嬭瘎 路 宀椾綅鐢诲儚<br>涓€绔欏紡鏅鸿兘鎷涜仒瑙ｅ喅鏂规</p>
+        
+        <div class="feature-badges">
+            <span class="feature-badge">馃攳 浜烘墠瀵绘簮</span>
+            <span class="feature-badge">馃搵 闈㈣瘯棰樼翰</span>
+            <span class="feature-badge">馃搳 闈㈣瘯璇勪及</span>
+            <span class="feature-badge pro">
+                馃И 浜烘墠娴嬭瘎 <span class="pro-tag">PRO</span>
+            </span>
+            <span class="feature-badge pro">
+                馃幆 宀椾綅鐢诲儚 <span class="pro-tag">PRO</span>
+            </span>
+        </div>
+    </div>
+
+    <!-- Chat -->
+    <div class="chat-wrapper">
+        <div class="chat-container">
+            <!-- Pricing Banner -->
+            <div class="pricing-banner" id="pricingBanner">
+                <div class="pricing-info-title">馃搵 浣撻獙棣嗘嫑鍕熶腑</div>
+                <div>
+                    <span class="pricing-tier"><span class="tag-free">鉁?/span> 娉ㄥ唽鍗充韩 <strong>7澶?/strong> 鍏嶈垂浣撻獙</span>
+                    <span class="pricing-tier"><span class="tag-free">鉁?/span> 浠嬬粛2浜?鈫?<strong>15澶?/strong></span>
+                    <span class="pricing-tier"><span class="tag-free">鉁?/span> 浠嬬粛5浜?鈫?<strong>30澶?/strong></span>
+                    <span class="pricing-tier"><span class="tag-pro">馃敟</span> 鎻愬缓璁閲囩撼 鈫?鍗囩骇鐗?<strong>100鍏?/strong>鍒?/span>
+                </div>
+            </div>
+
+            <!-- Messages -->
+            <div class="messages" id="messages">
+                <div class="message bot">
+                    <div class="message-avatar">婢?/div>
+                    <div class="message-bubble">
+                        馃帣锔?浣犲ソ锛屾垜鏄?<strong>婢滆姱</strong>锛屾緶鑺収鏅虹殑AI鍔╂墜銆?br><br>
+                        娆㈣繋鏉ュ埌鏅鸿兘鎷涜仒浣撻獙棣嗭紒馃帀<br><br>
+                        浣犲彲浠ラ棶鎴戜换浣曞叧浜庢嫑鑱樼殑闂锛屾瘮濡傦細<br>
+                        鈥?馃攳 "甯垜鎵惧嚑涓攢鍞€荤洃鍊欓€変汉"<br>
+                        鈥?馃搵 "鍑洪潰璇曢"<br>
+                        鈥?馃搳 "璇勪及杩欎釜鍊欓€変汉"<br>
+                        馃弳 鍗囩骇鐗堝姛鑳斤細<br>
+                        鈥?馃И "缁欏€欓€変汉鍋氫汉鎵嶆祴璇?<br>
+                        鈥?馃幆 "鐢熸垚宀椾綅鐢诲儚"<br><br>
+                        鍏堣亰鑱婂惂锛屼綘鎯充粠鍝釜鍔熻兘寮€濮嬩綋楠岋紵
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions" id="quickActions">
+                <button class="quick-btn" data-msg="鎴戞兂浜嗚В涓€涓嬩骇鍝佸姛鑳?>馃摉 浜у搧浠嬬粛</button>
+                <button class="quick-btn" data-msg="浣撻獙瑙勫垯鏄粈涔?>馃搵 浣撻獙瑙勫垯</button>
+                <button class="quick-btn" data-msg="鎴戞兂寮€濮嬩綋楠?>馃殌 寮€濮嬩綋楠?/button>
+                <button class="quick-btn" data-msg="鍑洪潰璇曢">馃搵 鍑洪潰璇曢</button>
+                <button class="quick-btn" data-msg="鐢熸垚宀椾綅鐢诲儚">馃幆 宀椾綅鐢诲儚</button>
+            </div>
+
+            <!-- Input -->
+            <div class="input-area">
+                <input type="text" id="userInput" placeholder="杈撳叆浣犳兂闂殑闂..." autofocus>
+                <button id="sendBtn">鉃?/button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        漏 2026 婢滆姱鎱ф櫤 路 鏅鸿兘鎷涜仒瑙ｅ喅鏂规<br>
+        <a href="#">浣跨敤鍗忚</a> 路 <a href="#">闅愮鏀跨瓥</a>
+    </div>
+
+    <script>
+        const messagesEl = document.getElementById('messages');
+        const userInput = document.getElementById('userInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const pricingBanner = document.getElementById('pricingBanner');
+
+        // Dialog state
+        let state = {
+            name: null,
+            company: null,
+            contact: null,
+            machineCode: null,
+            githubUser: null,
+            tier: 'none',  // 'none', 'basic', 'extended_basic', 'extended_pro'
+            daysRemaining: 7,
+            referrals: 0,
+            suggestions: 0,
+            phase: 'greeting'  // greeting, collecting, experiencing, expired
+        };
+
+        // Knowledge base
+        const productInfo = {
+            basic: {
+                title: '鍩虹鐗堬紙鍏嶈垂浣撻獙锛?,
+                features: ['浜烘墠瀵绘簮锛氫粠绠€鍘嗗簱銆佸閮ㄤ汉鎵嶅簱鍖归厤鍊欓€変汉', '鏅鸿兘闈㈣瘯棰樼翰锛氭牎鎷?绀炬嫑/骞查儴闈㈣瘯', '闈㈣瘯璇勪及锛氶噺鍖栬瘎浼般€佸綍鐢ㄥ缓璁?],
+                duration: '7澶?
+            },
+            pro: {
+                title: '鍗囩骇鐗堬紙馃弳锛?,
+                features: ['鍩虹鐗堝叏閮ㄥ姛鑳?, '浜烘墠娴嬭瘎锛氫簲椤圭礌璐ㄦ儏鏅垽鏂祴璇?, '宀椾綅鐢诲儚锛氬吀鍨嬪矖浣嶇敾鍍?+ 鎴愰暱璺緞'],
+                duration: '闇€瑙ｉ攣'
+            },
+            pricing: {
+                intro: '鎺ㄨ崘0浜?鈫?7澶?, 
+                refer2: '浠嬬粛2浜?鈫?15澶?,
+                refer5: '浠嬬粛5浜?鈫?30澶?,
+                suggest: '寤鸿琚噰绾?鈫?鍗囩骇鐗堜綋楠?+ 100鍏冨埜'
+            }
+        };
+
+        const faq = {
+            '浣撻獙瑙勫垯': `馃搵 **浣撻獙棣嗘嫑鍕熻鍒?*\n\n**鍩虹浣撻獙**锛氭敞鍐屽嵆浜?**7澶?* 鍏嶈垂\n**鎺ㄨ崘浣撻獙**锛歕n  鈥?浠嬬粛2浣嶆湅鍙?鈫?寤堕暱鑷?**15澶?*\n  鈥?浠嬬粛5浣嶆湅鍙?鈫?寤堕暱鑷?**30澶?*\n**鍏卞垱浣撻獙**锛歕n  鈥?鎻愪氦浜у搧寤鸿琚噰绾?鈫?瑙ｉ攣**鍗囩骇鐗?*\n  鈥?寤鸿鍐嶆琚噰绾?鈫?鑾峰緱 **100鍏冧骇鍝佸埜**\n\n鍗囩骇鐗堝寘鍚細浜烘墠娴嬭瘎 + 宀椾綅鐢诲儚鍔熻兘`,
+            '浜у搧浠嬬粛': `馃 **鏅鸿兘鎷涜仒鏅鸿兘浣?*\n\n**鍩虹鐗堝姛鑳斤細**\n馃攳 浜烘墠瀵绘簮 鈥?浠庣畝鍘嗗簱鍜屽閮ㄦ笭閬撳尮閰嶅€欓€変汉\n馃搵 鏅鸿兘闈㈣瘯棰樼翰 鈥?瑕嗙洊鏍℃嫑/绀炬嫑/骞查儴闈㈣瘯\n馃搳 闈㈣瘯璇勪及 鈥?鍩轰簬浜旈」绱犺川閲忓寲璇勪及\n\n**鍗囩骇鐗堥澶栧姛鑳斤紙馃弳锛夛細**\n馃И 浜烘墠娴嬭瘎 鈥?鎯呮櫙鍒ゆ柇娴嬭瘎锛岃瘎浼颁簲椤圭礌璐╘n馃幆 宀椾綅鐢诲儚 鈥?鐢熸垚鍏稿瀷宀椾綅鐢诲儚 + 鎴愰暱璺緞\n\n**閫傚悎璋佺敤锛?* HR銆佹嫑鑱樿礋璐ｄ汉銆佷笟鍔￠儴闂ㄧ鐞嗚€卄,
+            '瀹夎鎸囧紩': `馃洜 **瀹夎鎸囧紩**\n\n1锔忊儯 涓嬭浇瀹夎 **OpenClaw**锛圦榫欒櫨锛塡n2锔忊儯 鎻愪緵浣犵殑 **鐢佃剳鏈哄櫒鐮?*\n3锔忊儯 鎻愪緵浣犵殑 **GitHub鐢ㄦ埛鍚?*\n4锔忊儯 鎴戜細缁欎綘浠撳簱鍦板潃鍜岃闂潈闄怽n5锔忊儯 git clone 鈫?瀵煎叆skill 鈫?寮€濮嬩娇鐢╘n\n濡傛湁鐤戦棶闅忔椂闂垜锛乣
+        };
+
+        // Bot responses
+        function getGreeting(name) {
+            return `馃帣锔?浣犲ソ${name ? '锛? + name : ''}锛佹垜鏄緶鑺湪\n\n娆㈣繋鏉ュ埌**鏅鸿兘鎷涜仒浣撻獙棣?*锛乗n\n浣犲彲浠ラ殢鏃堕棶鎴戯細\n鈥?"浜у搧浠嬬粛" 鈥?浜嗚В鍔熻兘\n鈥?"浣撻獙瑙勫垯" 鈥?浜嗚В鍏嶈垂鏃堕暱\n鈥?"寮€濮嬩綋楠? 鈥?璁╂垜甯綘寮€閫歕n鈥?鎴栬€呯洿鎺ヨ浣犵殑闇€姹傦紝姣斿"鍑洪潰璇曢"\n\n鎯充粠鍝紑濮嬶紵`;
+        }
+
+        function getPricingInfo() {
+            return `馃搵 **褰撳墠浣撻獙瑙勫垯**\n\n` +
+                `鉁?**娉ㄥ唽鍗充韩锛?* ${productInfo.pricing.intro}\n` +
+                `鉁?**浠嬬粛2浜猴細** ${productInfo.pricing.refer2}\n` +
+                `鉁?**浠嬬粛5浜猴細** ${productInfo.pricing.refer5}\n` +
+                `馃敟 **寤鸿琚噰绾筹細** ${productInfo.pricing.suggest}\n\n` +
+                `浣犵幇鍦ㄤ綋楠岀殑鏄?**鍩虹鐗?*銆傛兂鐭ラ亾鍗囩骇鐗堟湁浠€涔堜笉鍚屽悧锛焋;
+        }
+
+        function handleReferral() {
+            return `馃帀 **鎺ㄨ崘鏈夌ぜ锛?*\n\n浠嬬粛鏈嬪弸鏉ヤ綋楠岋紝鍙屾柟閮芥湁濂栧姳锛歕n\n` +
+                `馃搶 **浠嬬粛 2 浣嶆湅鍙?* 鈫?浣犵殑浣撻獙寤堕暱鑷?**15澶?*\n` +
+                `馃搶 **浠嬬粛 5 浣嶆湅鍙?* 鈫?浣犵殑浣撻獙寤堕暱鑷?**30澶?*\n\n` +
+                `鏈嬪弸娉ㄥ唽鏃惰澶囨敞浣犵殑鍚嶅瓧锛岀郴缁熶細鑷姩缁熻銆俓n\n褰撳墠鎺ㄨ崘杩涘害锛?{state.referrals}/2 鈫?15澶╋紝${state.referrals}/5 鈫?30澶ー;
+        }
+
+        function startExperience() {
+            state.phase = 'collecting';
+            return `濂界殑锛佸紑濮嬪紑閫氫綋楠岋紝鎴戦渶瑕佸嚑椤逛俊鎭細\n\n` +
+                `1锔忊儯 **浣犵殑濮撳悕**\n` +
+                `2锔忊儯 **鍏徃/鑱屼綅**\n` +
+                `3锔忊儯 **鎵嬫満鍙锋垨寰俊鍙?*锛堟柟渚垮悗缁湇鍔★級\n` +
+                `4锔忊儯 **鐢佃剳鏈哄櫒鐮?*锛堢敤浜庣粦瀹歀icense锛塡n` +
+                `5锔忊儯 **GitHub鐢ㄦ埛鍚?*锛堢敤浜庡紑閫氫粨搴撴潈闄愶級\n\n` +
+                `浣犲彲浠ヤ竴椤逛竴椤瑰憡璇夋垜锛屼篃鍙互涓€娆℃€ч兘鍙戣繃鏉ヰ煒奰;
+        }
+
+        function handleUserMessage(msg) {
+            const lower = msg.toLowerCase();
+            
+            // Phase: collecting info
+            if (state.phase === 'collecting') {
+                // Simple info extraction (in production this would be more sophisticated)
+                if (!state.name) {
+                    state.name = msg;
+                    return `鏀跺埌锛?{msg}浣犲ソ馃憢\n\n閭ｄ綘鐨?*鍏徃/鑱屼綅**鏄粈涔堬紵`;
+                }
+                if (!state.company) {
+                    state.company = msg;
+                    return `濂界殑锛侀偅浣犵殑**鎵嬫満鍙锋垨寰俊鍙?*鏄灏戯紵鏂逛究鍚庣画鎷夌兢鍜岄€氱煡銆俙;
+                }
+                if (!state.contact) {
+                    state.contact = msg;
+                    return `鏀跺埌锛佹帴涓嬫潵闇€瑕佷綘鐨?*鐢佃剳鏈哄櫒鐮?*锛歕n\n鍦ㄧ數鑴戜笂鎵撳紑缁堢/鍛戒护鎻愮ず绗︼紝杈撳叆浠ヤ笅鍛戒护鑾峰彇锛歕n\`\`\`\nwmic csproduct get uuid\n\`\`\`\n鐒跺悗鎶婇偅涓插瓧绗﹀彂缁欐垜銆俙;
+                }
+                if (!state.machineCode) {
+                    state.machineCode = msg;
+                    return `鏀跺埌锛佹渶鍚庝竴姝モ€斺€斾綘鐨?*GitHub鐢ㄦ埛鍚?*鏄粈涔堬紵鎴戝府浣犲紑閫氫粨搴撴潈闄愩€俙;
+                }
+                if (!state.githubUser) {
+                    state.githubUser = msg;
+                    // Mark as experienced
+                    state.phase = 'experiencing';
+                    state.daysRemaining = 7;
+                    return `馃帀 **寮€閫氭垚鍔燂紒**\n\n浣犲ソ **${state.name}**锛?{state.company}锛夛紝浣撻獙宸叉縺娲伙紒\n\n**鎺ヤ笅鏉ユ€庝箞鍋氾細**\n1锔忊儯 涓嬭浇瀹夎 **OpenClaw**锛圦榫欒櫨锛塡n2锔忊儯 鎴戜細鎶婁粨搴撳湴鍧€鍙戠粰浣燶n3锔忊儯 git clone 鍚庡湪鏈湴瀵煎叆skill\n4锔忊儯 寮€濮嬩娇鐢ㄥ惂锛乗n\n**褰撳墠浣撻獙杩涘害锛?*\n鈥?鍩虹鐗堬細杩樺墿 **7澶?*\n鈥?鎺ㄨ崘锛?{state.referrals}/2 鈫?15澶‐n鈥?鍗囩骇鐗堬細鎻愪氦寤鸿瑙ｉ攣\n\n绁濅綋楠屾剦蹇紒鏈変换浣曢棶棰橀殢鏃堕棶鎴戰煒奰;
+                }
+            }
+
+            // Greeting/intent keywords
+            if (lower.includes('浣撻獙瑙勫垯') || lower.includes('鍏嶈垂') || lower.includes('鏃堕暱') || lower.includes('澶氬皯澶?)) {
+                showPricingBanner();
+                return getPricingInfo();
+            }
+            
+            if (lower.includes('浜у搧浠嬬粛') || lower.includes('鏈変粈涔堝姛鑳?) || lower.includes('鑳藉仛浠€涔?)) {
+                return faq['浜у搧浠嬬粛'];
+            }
+
+            if (lower.includes('寮€濮嬩綋楠?) || lower.includes('鎯宠瘯鐢?) || lower.includes('娉ㄥ唽') || lower.includes('寮€閫?)) {
+                return startExperience();
+            }
+
+            if (lower.includes('鎺ㄨ崘') || lower.includes('浠嬬粛') || lower.includes('鏈嬪弸') || lower.includes('瑁傚彉') || lower.includes('閭€璇?)) {
+                return handleReferral();
+            }
+
+            if (lower.includes('瀹夎') || lower.includes('鎬庝箞鐢?) || lower.includes('鎿嶄綔') || lower.includes('鎸囧紩')) {
+                return faq['瀹夎鎸囧紩'];
+            }
+
+            if (lower.includes('鍗囩骇鐗?) || lower.includes('pro') || lower.includes('宀椾綅鐢诲儚') || lower.includes('浜烘墠娴嬭瘎')) {
+                return `馃弳 **鍗囩骇鐗堝姛鑳?*\n\n鍖呭惈涓ゅぇ鏍稿績鑳藉姏锛歕n\n**馃И 浜烘墠娴嬭瘎**\n鈥?鍩轰簬浜旈」绱犺川鐨勬儏鏅垽鏂祴璇刓n鈥?杈撳嚭绱犺川闆疯揪鍥惧拰宀椾綅鍖归厤搴n\n**馃幆 宀椾綅鐢诲儚**\n鈥?鐢熸垚鍏稿瀷宀椾綅鐢诲儚鍜屾垚闀胯矾寰刓n鈥?楂樼宀椾綅绮惧噯鎷涜仒鍒╁櫒\n\n**濡備綍瑙ｉ攣锛?*\n鎻愪氦浜у搧寤鸿琚噰绾?鈫?鑷姩鍗囩骇锛乗n\n鎯宠瘯璇曞悧锛熺洿鎺ヨ"甯垜鐢熸垚宀椾綅鐢诲儚"鎴?鍋氫汉鎵嶆祴璇?鍗冲彲锛堜粎闄愬崌绾х増鐢ㄦ埛锛塦;
+            }
+
+            if (lower.includes('寤鸿') || lower.includes('鍙嶉') || lower.includes('鎰忚') || lower.includes('鎯虫硶')) {
+                state.suggestions++;
+                return `馃挕 鎰熻阿浣犵殑寤鸿锛佹垜宸茬粡璁板綍涓嬫潵浜嗐€俓n\n寤鸿璇勫鍛ㄦ湡锛?*7涓伐浣滄棩鍐?*鍥炲閲囩撼缁撴灉銆俓n\n**褰撳墠绱寤鸿锛?*${state.suggestions}鏉n**宸茶閲囩撼锛?*${state.suggestions > 0 ? '杩樻湭鏈夎閲囩撼璁板綍锛屼細灏藉揩璇勫' : '鎻愪氦鍚庢垜浠細灏藉揩璇勫'}`;
+            }
+
+            if (lower.includes('鍑洪潰璇曢') || lower.includes('闈㈣瘯鎻愮翰') || lower.includes('闈㈣瘯棰樼翰')) {
+                return `馃搵 **闈㈣瘯棰樼翰**\n\n璇峰憡璇夋垜锛歕n1锔忊儯 闈㈣瘯鍦烘櫙锛堟牎鎷?绀炬嫑/骞查儴闈㈣瘯锛塡n2锔忊儯 宀椾綅鍚嶇О鍜孞D\n\n渚嬪锛歕"绀炬嫑锛孞ava寮€鍙戯紝5骞寸粡楠岋紝楂樺苟鍙慭"\n\n鎴戦┈涓婂府浣犵敓鎴愰潰璇曢锛乣;
+            }
+
+            if (lower.includes('瀵绘簮') || lower.includes('鎵惧€欓€変汉') || lower.includes('鎷涗汉') || lower.includes('鎷涜仒')) {
+                return `馃攳 **浜烘墠瀵绘簮**\n\n璇锋彁渚涙嫑鑱橀渶姹傦細\n1锔忊儯 宀椾綅鍚嶇О鍜孞D\n2锔忊儯 瀵绘簮鑼冨洿锛堝唴閮?澶栭儴锛塡n3锔忊儯 绛涢€夋潯浠禱n\n渚嬪锛歕"鎵鹃攢鍞€荤洃锛?骞翠互涓婄鐞嗙粡楠岋紝鍖荤枟琛屼笟\"\n\n鍙﹀锛屽叕鍙哥殑鍩烘湰鎯呭喌鍜屼笟鍔￠樁娈垫槸浠€涔堬紵`;
+            }
+
+            if (lower.includes('璇勪及') || lower.includes('鎵撳垎') || lower.includes('褰曠敤')) {
+                return `馃搳 **闈㈣瘯璇勪及**\n\n璇锋彁渚涳細\n1锔忊儯 宀椾綅JD\n2锔忊儯 闈㈣瘯璁板綍锛堣嚦灏?涓€欓€変汉鐨勫叿浣撹涓哄洖绛旓級\n\n鎴戝彲浠ュ熀浜庝簲椤圭礌璐ㄨ繘琛岄噺鍖栬瘎浼帮紝杈撳嚭褰曠敤寤鸿銆俙;
+            }
+
+            if (lower.includes('缁垂') || lower.includes('鍒版湡') || lower.includes('寤堕暱') || lower.includes('杩囨湡')) {
+                return `鈴?**缁垂/寤堕暱浣撻獙**\n\n褰撳墠鍓╀綑锛?*${state.daysRemaining}澶?*\n\n**寤堕暱鏂瑰紡锛?*\n鈥?馃棧 浠嬬粛2浣嶆湅鍙?鈫?+8澶╋紙鍒?5澶╋級\n鈥?馃棧 浠嬬粛5浣嶆湅鍙?鈫?+23澶╋紙鍒?0澶╋級\n鈥?馃挕 鎻愬缓璁閲囩撼 鈫?鍗囩骇鐗堜綋楠孿n鈥?馃挵 璐拱姝ｅ紡鐗堬紙鑱旂郴瀹㈡湇锛塡n\n浣犳兂閫夋嫨鍝鏂瑰紡锛焋;
+            }
+
+            // Default: AI response
+            return `鏀跺埌浣犵殑娑堟伅浜嗭紒\n\n鍏充簬 "**${msg}**"锛屾垜鏈夊嚑涓柟鍚戝彲浠ュ府浣狅細\n\n` +
+                `鈥?馃搵 **鍑洪潰璇曢** 鈥?鍛婅瘔鎴戝矖浣嶅拰鍦烘櫙\n` +
+                `鈥?馃攳 **鎵惧€欓€変汉** 鈥?鍛婅瘔鎴戞嫑鑱橀渶姹俓n` +
+                `鈥?馃搳 **闈㈣瘯璇勪及** 鈥?鎻愪緵闈㈣瘯璁板綍\n` +
+                `鈥?馃幆 **宀椾綅鐢诲儚** 鈥?鐢熸垚楂樼宀椾綅鐢诲儚\n` +
+                `鈥?馃И **浜烘墠娴嬭瘎** 鈥?娴嬭瘎鍊欓€変汉绱犺川\n` +
+                `鈥?馃搵 **浣撻獙瑙勫垯** 鈥?浜嗚В鍏嶈垂鏃堕暱鍜屽崌绾х増\n\n` +
+                `鎴栬€呮洿鍏蜂綋鍦板憡璇夋垜浣犵殑闇€姹傦紵`;
+        }
+
+        function addMessage(type, content) {
+            const msg = document.createElement('div');
+            msg.className = `message ${type}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = type === 'bot' ? '婢? : '浣?;
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            bubble.innerHTML = content.replace(/\n/g, '<br>');
+            
+            msg.appendChild(avatar);
+            msg.appendChild(bubble);
+            messagesEl.appendChild(msg);
+            
+            // Scroll to bottom
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+
+        function showTyping(callback) {
+            const typing = document.createElement('div');
+            typing.className = 'message bot';
+            typing.id = 'typing';
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = '婢?;
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            bubble.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
+            
+            typing.appendChild(avatar);
+            typing.appendChild(bubble);
+            messagesEl.appendChild(typing);
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+            
+            setTimeout(() => {
+                const typingEl = document.getElementById('typing');
+                if (typingEl) typingEl.remove();
+                callback();
+            }, 800 + Math.random() * 600);
+        }
+
+        function showPricingBanner() {
+            pricingBanner.classList.add('visible');
+        }
+
+        function sendMessage() {
+            const msg = userInput.value.trim();
+            if (!msg) return;
+            
+            // Add user message
+            addMessage('user', msg);
+            userInput.value = '';
+            sendBtn.disabled = true;
+            
+            // Show typing and respond
+            showTyping(() => {
+                const response = handleUserMessage(msg);
+                addMessage('bot', response);
+                sendBtn.disabled = false;
+                userInput.focus();
+                
+                // Show pricing banner on first visit
+                showPricingBanner();
+            });
+        }
+
+        // Event listeners
+        sendBtn.addEventListener('click', sendMessage);
+        userInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // Quick action buttons
+        document.querySelectorAll('.quick-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                userInput.value = btn.dataset.msg;
+                sendMessage();
+            });
+        });
+
+        // Auto focus
+        userInput.focus();
+
+        console.log('馃殌 婢滆姱鎱ф櫤 路 鏅鸿兘鎷涜仒浣撻獙棣嗗凡鍚姩');
+        console.log('褰撳墠鐘舵€?', state);
+    </script>
+</body>
+</html>
